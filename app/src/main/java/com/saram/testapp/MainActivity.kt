@@ -1,13 +1,11 @@
 package com.saram.testapp
 
-import Adapter.MainViewPager
-import androidx.appcompat.app.AppCompatActivity
+import com.saram.testapp.adapter.MainViewPager
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
 
 import com.saram.testapp.databinding.ActivityMainBinding
-import kotlinx.coroutines.flow.combine
 
 class MainActivity : BaseActivity() {
 

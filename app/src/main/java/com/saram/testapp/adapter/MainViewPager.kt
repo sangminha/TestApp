@@ -1,4 +1,4 @@
-package Adapter
+package com.saram.testapp.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

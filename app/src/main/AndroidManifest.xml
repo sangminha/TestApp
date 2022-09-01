@@ -16,21 +16,6 @@
         android:theme="@style/Theme.TestApp"
         tools:targetApi="31">
         <activity
-            android:name=".ChatActivity"
-            android:exported="false"
-            android:label="@string/title_activity_chat"
-            android:theme="@style/Theme.TestApp.NoActionBar" />
-        <activity
-            android:name=".EditActivity"
-            android:exported="false"
-            android:label="@string/title_activity_edit"
-            android:theme="@style/Theme.TestApp.NoActionBar" />
-        <activity
-            android:name=".BaseActivity"
-            android:exported="false"
-            android:label="@string/title_activity_base"
-            android:theme="@style/Theme.TestApp.NoActionBar" />
-        <activity
             android:name=".SplahActivity"
             android:exported="true"
             android:label="@string/title_activity_splah"

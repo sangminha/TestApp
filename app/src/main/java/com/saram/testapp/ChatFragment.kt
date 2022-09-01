@@ -1,24 +1,19 @@
 package com.saram.testapp
 
-import Adapter.ChatRecyclerAdapter
-import Data.ChatData
-import android.content.Intent
+import com.saram.testapp.adapter.ChatRecyclerAdapter
+import com.saram.testapp.data.ChatData
 import android.os.Bundle
-import android.text.Editable
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.saram.testapp.databinding.ActivityChatBinding
 
 import com.saram.testapp.databinding.FragmentChatBinding
 import java.text.SimpleDateFormat
@@ -31,8 +26,6 @@ class ChatFragment : BaseFragment() {
 
     lateinit var binding: FragmentChatBinding
 
-
-    //   lateinit var mTopicData: UserData
     lateinit var mReplyAdapter: ChatRecyclerAdapter
 
     val mReplyList = ArrayList<ChatData>()
@@ -51,15 +44,6 @@ class ChatFragment : BaseFragment() {
         setupEvents()
         setValues()
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        val reply: String? = intent.getStringExtra("string")
-//        if (reply != null) {
-//            mReplyList.add(reply)
-//            mReplyAdapter.notifyDataSetChanged()
-//        }
-//    }
 
     override fun setupEvents() {
         val realtime =
@@ -90,13 +74,9 @@ class ChatFragment : BaseFragment() {
                         snapshot.child("content").value.toString(),
                         snapshot.child("time").value.toString(),
                         snapshot.child("deviceToken").value.toString()
-
-
-
-
                     )
-
-
+                    Log.d("snapShot", chatData.toString())
+//                    받아온 데이터를 리스트에 넣고 리싸이클러뷰 갱신
                 }
 
                 override fun onCancelled(error: DatabaseError) {
