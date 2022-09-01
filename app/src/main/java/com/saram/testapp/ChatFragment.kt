@@ -1,5 +1,6 @@
 package com.saram.testapp
 
+import android.content.Intent
 import com.saram.testapp.adapter.ChatRecyclerAdapter
 import com.saram.testapp.data.ChatData
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -25,7 +27,7 @@ import kotlin.collections.HashMap
 class ChatFragment : BaseFragment() {
 
     lateinit var binding: FragmentChatBinding
-
+    val REQ_FOR_REPLY = 104
     lateinit var mReplyAdapter: ChatRecyclerAdapter
 
     val mReplyList = ArrayList<ChatData>()
@@ -94,5 +96,17 @@ class ChatFragment : BaseFragment() {
         binding.rvProfile.layoutManager = LinearLayoutManager(mContext)
     }
 
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            if (requestCode == REQ_FOR_REPLY) {
+                val reply = data?.getStringExtra("string")!!
+                val reply1 = data?.getStringExtra("string")!!
+                val reply2 = data?.getStringExtra("string")!!
+                val position = data?.getIntExtra("position", 0)!!
+                 mReplyList.add(position,ChatData(reply,reply1,reply2))
+                mReplyAdapter.notifyItemChanged(REQ_FOR_REPLY)
+            }
+        }
+    }
 }
