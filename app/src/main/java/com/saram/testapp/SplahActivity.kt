@@ -1,4 +1,5 @@
 package com.saram.testapp
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,11 +13,11 @@ import com.saram.testapp.databinding.ActivitySplahBinding
 
 class SplahActivity : BaseActivity() {
 
-    lateinit var binding : ActivitySplahBinding
+    lateinit var binding: ActivitySplahBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-      binding = DataBindingUtil.setContentView(this,R.layout.activity_splah)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_splah)
         setupEvents()
         setValues()
     }
@@ -29,9 +30,10 @@ class SplahActivity : BaseActivity() {
             finish()
         }
 
-        }
-    override fun setValues() {
+    }
 
+    override fun setValues() {
+        // [문제] 디바이스 토큰 발급
     }
 
 
