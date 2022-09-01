@@ -5,41 +5,30 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:layout_margin="15dp"
+        android:padding="5dp"
         android:gravity="center"
-
-        android:background="?attr/selectableItemBackground"
-
+        android:foreground="?attr/selectableItemBackground"
         android:clickable="true"
-        android:focusable="true"
-
-
-        >
+        android:focusable="true">
 
         <LinearLayout
-            android:layout_width="411dp"
-            android:layout_height="20dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/contentTxt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="100dp"
+                android:layout_weight="1"
                 android:text="댓글들" />
 
             <TextView
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
                 android:text="시간" />
-
-            <TextView
-                android:id="@+id/deviceToken"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:text="Token" />
 
         </LinearLayout>
 
@@ -47,8 +36,9 @@
             android:id="@+id/addReplyBtn12"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="bottom|end"
-            android:layout_margin="15dp"
             android:text="수정하기" />
 
-    </LinearLayout></layout>
+    </LinearLayout>
+</layout>

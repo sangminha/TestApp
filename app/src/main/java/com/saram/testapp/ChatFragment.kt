@@ -75,8 +75,8 @@ class ChatFragment : BaseFragment() {
                         snapshot.child("time").value.toString(),
                         snapshot.child("deviceToken").value.toString()
                     )
-                    Log.d("snapShot", chatData.toString())
-//                    받아온 데이터를 리스트에 넣고 리싸이클러뷰 갱신
+                    mReplyList.add(0, chatData)
+                    mReplyAdapter.notifyDataSetChanged()
                 }
 
                 override fun onCancelled(error: DatabaseError) {

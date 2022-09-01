@@ -20,19 +20,11 @@ class ChatRecyclerAdapter(
 
             val contentTxt = itemView.findViewById<TextView>(R.id.contentTxt)
             val time = itemView.findViewById<TextView>(R.id.time)
-            val deviceToken = itemView.findViewById<TextView>(R.id.deviceToken)
 
-
-                
                 contentTxt.text=item.content
                 time.text=item.time
-                deviceToken.text =item.deviceToken
-
 
 //            수정 버튼 클릭 이벤트
-
-
-
 
         }
     }
