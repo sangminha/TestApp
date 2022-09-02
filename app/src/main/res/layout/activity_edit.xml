@@ -15,7 +15,7 @@
             android:layout_height="150dp">
 
             <EditText
-                android:id="@+id/text12"
+                android:id="@+id/contentEdt"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_margin="60dp"
@@ -29,12 +29,12 @@
 
 
         <Button
-            android:id="@+id/Btn123"
+            android:id="@+id/editBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="15dp"
-            android:text="의견 등록하기" />
+            android:text="의견 수정하기" />
 
     </LinearLayout>
 

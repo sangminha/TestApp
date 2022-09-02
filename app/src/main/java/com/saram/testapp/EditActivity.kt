@@ -42,11 +42,20 @@ class EditActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        binding.editBtn.setOnClickListener {
+            val inputContent = binding.contentEdt.text.toString()
+            mChatData.content = inputContent
 
+            val myIntent = Intent()
+            myIntent.putExtra("chatData", mChatData)
+                .putExtra("position",position)
+            setResult(RESULT_OK, myIntent)
+            finish()
+        }
     }
 
 
     override fun setValues() {
-
+        binding.contentEdt.setText(mChatData.content)
     }
 }

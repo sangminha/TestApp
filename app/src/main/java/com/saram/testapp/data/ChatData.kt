@@ -3,7 +3,7 @@ package com.saram.testapp.data
 import java.io.Serializable
 
 data class ChatData (
-    val content : String,
-    val time : String,
-    val deviceToken : String
+    var content : String,
+    var time : String,
+    var deviceToken : String
 ): Serializable
