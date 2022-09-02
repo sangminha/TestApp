@@ -38,9 +38,7 @@ class ChatRecyclerAdapter(
 //            수정 버튼 클릭 이벤트
             editBtn.setOnClickListener {
                 val myIntent = Intent(mContext, EditActivity::class.java)
-                myIntent.putExtra("content", item.content)
-                myIntent.putExtra("content", item.time)
-                myIntent.putExtra("content", item.deviceToken)
+                myIntent.putExtra("chatData", item)
                     .putExtra("position", adapterPosition)
                    Log.d("테스트",item.toString())
                 val fragment = (mContext as MainActivity)
