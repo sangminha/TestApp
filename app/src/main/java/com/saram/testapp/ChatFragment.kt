@@ -65,12 +65,13 @@ class ChatFragment : BaseFragment() {
 
             realtime.getReference("data")
                 .child("meassge")
+                .push()
                 .setValue(inputMap)
 
             binding.contentEdt.setText("")
 
         }
-        realtime.getReference("data").child("meassge").addValueEventListener(
+        realtime.getReference("data").child("meassge").push().addValueEventListener(
             object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val chatData = ChatData(
