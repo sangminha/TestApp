@@ -1,24 +1,14 @@
 package com.saram.testapp
+
 import android.content.Intent
 import android.os.Bundle
-import android.service.autofill.UserData
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.saram.testapp.adapter.ChatAdapter
-
-import com.saram.testapp.adapter.ChatRecyclerAdapter
 import com.saram.testapp.data.ChatData
 import com.saram.testapp.databinding.ActivityChatBinding
-
-import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class ChatActivity : BaseActivity() {
@@ -46,6 +36,8 @@ class ChatActivity : BaseActivity() {
 
     }
 
+
+
 //    override fun onResume() {
 //        super.onResume()
 //        val reply: String? = intent.getStringExtra("string")
@@ -56,6 +48,9 @@ class ChatActivity : BaseActivity() {
 //    }
 
     override fun setupEvents() {
+
+
+
       binding.addReplyBtn1234.setOnClickListener {
           val contentTxt = binding.addReplyEdt1234.text.toString()
           val alpa = mReplyList.size
