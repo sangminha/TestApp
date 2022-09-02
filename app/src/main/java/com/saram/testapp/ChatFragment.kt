@@ -5,12 +5,11 @@ import android.content.Intent
 import com.saram.testapp.adapter.ChatRecyclerAdapter
 import com.saram.testapp.data.ChatData
 import android.os.Bundle
-
 import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -50,7 +49,7 @@ class ChatFragment : BaseFragment() {
 
     override fun setupEvents() {
         val realtime =
-            FirebaseDatabase.getInstance(" https://testapp-80b90-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            FirebaseDatabase.getInstance("https://realtimedb-441a2-default-rtdb.asia-southeast1.firebasedatabase.app/")
         binding.addReplyBtn.setOnClickListener {
             val content = binding.contentEdt.text.toString()
             val sdf = SimpleDateFormat("a h:mm")
@@ -71,15 +70,21 @@ class ChatFragment : BaseFragment() {
             binding.contentEdt.setText("")
 
         }
-        realtime.getReference("data").child("meassge").push().addValueEventListener(
+        realtime.getReference("data").child("meassge").addValueEventListener(
             object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val chatData = ChatData(
-                        snapshot.child("content").value.toString(),
-                        snapshot.child("time").value.toString(),
-                        snapshot.child("deviceToken").value.toString()
-                    )
-                    mReplyList.add(0, chatData)
+
+                    mReplyList.clear()
+
+                    for (child in snapshot.children) {
+                        mReplyList.add(
+                            ChatData(
+                                child.child("content").value.toString(),
+                                child.child("time").value.toString(),
+                                child.child("deviceToken").value.toString()
+                            )
+                        )
+                    }
                     mReplyAdapter.notifyDataSetChanged()
                 }
 
