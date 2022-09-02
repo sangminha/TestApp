@@ -44,6 +44,16 @@ class ChatRecyclerAdapter(
                 val fragment = (mContext as MainActivity)
                     .supportFragmentManager.findFragmentByTag("f1") as ChatFragment
                 fragment.startActivityForResult(myIntent, fragment.REQ_FOR_REPLY)
+
+
+            }
+            contentTxt.setOnClickListener{
+                val myIntent = Intent(mContext, ChatActivity::class.java)
+                myIntent.putExtra("content", item)
+                    .putExtra("position", adapterPosition)
+                val fragment = (mContext as MainActivity)
+                    .supportFragmentManager.findFragmentByTag("f1") as ChatFragment
+                fragment.startActivityForResult(myIntent, fragment.REQ_FOR_REPLY)
             }
         }
     }
