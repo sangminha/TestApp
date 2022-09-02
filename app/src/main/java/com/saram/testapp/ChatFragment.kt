@@ -1,5 +1,6 @@
 package com.saram.testapp
 
+import android.app.Activity
 import android.content.Intent
 import com.saram.testapp.adapter.ChatRecyclerAdapter
 import com.saram.testapp.data.ChatData
@@ -98,14 +99,12 @@ class ChatFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == AppCompatActivity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQ_FOR_REPLY) {
-                val reply = data?.getStringExtra("string")!!
-                val reply1 = data?.getStringExtra("string")!!
-                val reply2 = data?.getStringExtra("string")!!
-                val position = data?.getIntExtra("position", 0)!!
-                 mReplyList.add(position,ChatData(reply,reply1,reply2))
-                mReplyAdapter.notifyItemChanged(REQ_FOR_REPLY)
+                val chatData = data?.getSerializableExtra("chatData") as ChatData
+                val position = data.getIntExtra("position", 0)
+                 mReplyList[position] = chatData
+                mReplyAdapter.notifyItemChanged(position)
             }
         }
     }
