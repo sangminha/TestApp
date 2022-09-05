@@ -32,6 +32,9 @@ class ChatFragment : BaseFragment() {
 
     val mReplyList = ArrayList<ChatData>()
 
+    val realtime =
+        FirebaseDatabase.getInstance("https://realtimedb-441a2-default-rtdb.asia-southeast1.firebasedatabase.app/")
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,8 +51,6 @@ class ChatFragment : BaseFragment() {
     }
 
     override fun setupEvents() {
-        val realtime =
-            FirebaseDatabase.getInstance("https://realtimedb-441a2-default-rtdb.asia-southeast1.firebasedatabase.app/")
         binding.addReplyBtn.setOnClickListener {
             val content = binding.contentEdt.text.toString()
             val sdf = SimpleDateFormat("a h:mm")
@@ -58,19 +59,19 @@ class ChatFragment : BaseFragment() {
             val deviceToken = "123321"
             val inputMap = HashMap<String, String>()
             inputMap["content"] = content
-            inputMap["deviceToekn"] = deviceToken
+            inputMap["deviceToken"] = deviceToken
             inputMap["time"] = nowStr
 
 
             realtime.getReference("data")
-                .child("meassge")
+                .child("message")
                 .push()
                 .setValue(inputMap)
 
             binding.contentEdt.setText("")
 
         }
-        realtime.getReference("data").child("meassge").addValueEventListener(
+        realtime.getReference("data").child("message").addValueEventListener(
             object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -79,6 +80,7 @@ class ChatFragment : BaseFragment() {
                     for (child in snapshot.children) {
                         mReplyList.add(
                             ChatData(
+                                child.key.toString(),
                                 child.child("content").value.toString(),
                                 child.child("time").value.toString(),
                                 child.child("deviceToken").value.toString()
@@ -103,15 +105,15 @@ class ChatFragment : BaseFragment() {
         binding.rvProfile.layoutManager = LinearLayoutManager(mContext)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQ_FOR_REPLY) {
-                val chatData = data?.getSerializableExtra("chatData") as ChatData
-                val position = data.getIntExtra("position", 0)
-                 mReplyList[position] = chatData
-                mReplyAdapter.notifyItemChanged(position)
-            }
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode == Activity.RESULT_OK) {
+//            if (requestCode == REQ_FOR_REPLY) {
+//                val chatData = data?.getSerializableExtra("chatData") as ChatData
+//                val position = data.getIntExtra("position", 0)
+//                 mReplyList[position] = chatData
+//                mReplyAdapter.notifyItemChanged(position)
+//            }
+//        }
+//    }
 }

@@ -39,21 +39,12 @@ class ChatRecyclerAdapter(
             editBtn.setOnClickListener {
                 val myIntent = Intent(mContext, EditActivity::class.java)
                 myIntent.putExtra("chatData", item)
-                    .putExtra("position", adapterPosition)
-                   Log.d("테스트",item.toString())
-                val fragment = (mContext as MainActivity)
-                    .supportFragmentManager.findFragmentByTag("f1") as ChatFragment
-                fragment.startActivityForResult(myIntent, fragment.REQ_FOR_REPLY)
-
-
+                mContext.startActivity(myIntent)
             }
-            contentTxt.setOnClickListener{
+            itemView.setOnClickListener{
                 val myIntent = Intent(mContext, ChatActivity::class.java)
                 myIntent.putExtra("content", item)
-                    .putExtra("position", adapterPosition)
-                val fragment = (mContext as MainActivity)
-                    .supportFragmentManager.findFragmentByTag("f1") as ChatFragment
-                fragment.startActivityForResult(myIntent, fragment.REQ_FOR_REPLY)
+                mContext.startActivity(myIntent)
             }
         }
     }

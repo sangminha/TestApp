@@ -1,64 +1,52 @@
 package com.saram.testapp
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.database.*
 import com.saram.testapp.adapter.ChatAdapter
 import com.saram.testapp.data.ChatData
 import com.saram.testapp.databinding.ActivityChatBinding
+import java.text.SimpleDateFormat
 import java.util.*
 
 
 class ChatActivity : BaseActivity() {
-    var i = 1
+
     lateinit var binding: ActivityChatBinding
 
     //   lateinit var mTopicData: UserData
     lateinit var mReplyAdapter: ChatAdapter
     val mReplyList = ArrayList<ChatData>()
 
-    var reply = ""
+    lateinit var mChatData: ChatData
 
-    //    댓글을 쓰기 위한 RequestCode
-    val REQ_FOR_REPLY = 1004
+    val realtime =
+        FirebaseDatabase.getInstance("https://realtimedb-441a2-default-rtdb.asia-southeast1.firebasedatabase.app/")
 
-    //    댓글 수정 확인을 위한 RequestCode
-    val REQ_FOR_EDIT = 1005
-    val REQ = 1006
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat)
         setupEvents()
         setValues()
-
-
     }
-
-
-
-//    override fun onResume() {
-//        super.onResume()
-//        val reply: String? = intent.getStringExtra("string")
-//        if (reply != null) {
-//            mReplyList.add(reply)
-//            mReplyAdapter.notifyDataSetChanged()
-//        }
-//    }
 
     override fun setupEvents() {
 
 
+        binding.addReplyBtn1234.setOnClickListener {
+            val contentTxt = binding.addReplyEdt1234.text.toString()
+            val sdf = SimpleDateFormat("a h:mm")
+            val now = Calendar.getInstance()
+            val nowStr = sdf.format(now.time)
+            val inputMap = HashMap<String, String>()
 
-      binding.addReplyBtn1234.setOnClickListener {
-          val contentTxt = binding.addReplyEdt1234.text.toString()
-          val alpa = mReplyList.size
-          val reply = intent.getSerializableExtra("content") as ChatData
-          mReplyList.add(alpa, ChatData(contentTxt,reply.time,reply.deviceToken))
+            inputMap["content"] = contentTxt
+            inputMap["time"] = nowStr
 
-          mReplyAdapter.notifyDataSetChanged()
-      }
+            realtime.getReference("data").child("message").child(mChatData.id).child("replies").push().setValue(inputMap)
+        }
     }
 
 
@@ -67,31 +55,31 @@ class ChatActivity : BaseActivity() {
         binding.profile1234.adapter = mReplyAdapter
         binding.profile1234.layoutManager = LinearLayoutManager(mContext)
 
+        mChatData = intent.getSerializableExtra("content") as ChatData
 
-       val reply = intent.getSerializableExtra("content") as ChatData
+        binding.contentTxt1.text = mChatData.content
+        binding.time1.text = mChatData.time
 
-        binding.contentTxt1.text = reply.content
-        binding.time1.text =reply.time
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQ) {
-                val chatData = data?.getSerializableExtra("chatData") as ChatData
-                val position = data.getIntExtra("position", 0)
-                mReplyList[position] = chatData
-                mReplyAdapter.notifyItemChanged(position)
+        realtime.getReference("data").child("message").child(mChatData.id).child("replies").addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                mReplyList.clear()
+                for (child in snapshot.children) {
+                    mReplyList.add(
+                        ChatData(
+                            child.key.toString(),
+                            child.child("content").value.toString(),
+                            child.child("time").value.toString(),
+                            child.child("deviceToken").value.toString()
+                        )
+                    )
+                }
+                mReplyAdapter.notifyDataSetChanged()
             }
-//            RecyclerView에서 수정버튼 클릭해서 돌아온 경우 해당 리스트 수정 이벤트 처리
-        } else if (requestCode == REQ_FOR_EDIT) {
-            val chatData = data?.getSerializableExtra("chatData") as ChatData
-            val position = data.getIntExtra("position", 0)
-            val alpa = position.plus(i)
-            mReplyList[alpa] = chatData
-//                수정된 리스트를 리싸이클러뷰에 반영
-            mReplyAdapter.notifyDataSetChanged()
-        }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
     }
 
 
